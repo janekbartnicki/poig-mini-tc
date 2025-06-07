@@ -1,0 +1,78 @@
+## Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+*.log
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Mono Auto Generated Files
+mono_crash.*
+
+## Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+## Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+## Visual Studio
+.vs/
+.vscode/
+
+# Roslyn cache directories
+.vscode-test/
+.vsconfig
+
+## Rider
+.idea/
+
+## Build results (nunit, xunit, etc.)
+TestResult*/
+TestResults/
+*.TestResult.xml
+*.trx
+
+## Others
+_ReSharper*/
+*.DotSettings.user
+*.ncrunchproject
+*.localhistory
+*.orig
+*.rej
+
+# Publish output
+publish/
+out/
+
+# Packages
+*.nupkg
+packages/
+*.snupkg
+
+# Dotnet tools
+.dotnet/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Auto-generated files by Visual Studio
+*.dbmdl
+*.cache
+*.pdb
+*.mdb
+
+# Secrets and credentials
+secrets.json
+
+# Entity Framework
+Migrations/
