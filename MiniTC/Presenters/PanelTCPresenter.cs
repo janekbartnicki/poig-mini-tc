@@ -22,5 +22,10 @@ namespace MiniTC.Presenters
         {
             return _fsService.GetLogicalDrives();
         }
+
+        public IEnumerable<string> GetDirectoryItems(string path)
+        {
+            return _fsService.GetDirectoryItems(path);
+        }
     }
 }

@@ -23,12 +23,22 @@ namespace MiniTC.Views
     {
         private PanelTCPresenter _presenter;
         public IEnumerable<string> LogicalDrives => _presenter.GetLogicalDrives();
+        public IEnumerable<string> DirectoryItems { get; set; }
 
         public PanelTC()
         {
             InitializeComponent();
             _presenter = new PanelTCPresenter();
             this.DataContext = this;
+        }
+
+        public void OnDriveSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (DrivesComboBox.SelectedItem is string selectedDrive)
+            {
+                DirectoryItems = _presenter.GetDirectoryItems(selectedDrive);
+                ItemsListBox.ItemsSource = DirectoryItems;
+            }
         }
     }
 }
