@@ -20,9 +20,9 @@
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,5">
             <TextBlock Text="Drive:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <ComboBox x:Name="DrivesComboBox" SelectionChanged="OnDriveSelected" ItemsSource="{Binding LogicalDrives}"  Width="100"/>
+            <ComboBox x:Name="DrivesComboBox" SelectionChanged="DrivesComboBox_SelectionChanged" ItemsSource="{Binding LogicalDrives}"  Width="100"/>
         </StackPanel>
 
-        <ListBox x:Name="ItemsListBox" Grid.Row="2"/>
+        <ListBox x:Name="ItemsListBox" Grid.Row="2" MouseDoubleClick="ItemsListBox_MouseDoubleClick"/>
     </Grid>
 </UserControl>

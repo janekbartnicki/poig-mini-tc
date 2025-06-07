@@ -1,43 +1,56 @@
-﻿using MiniTC.Presenters;
-using System;
+﻿using MiniTC.Interfaces;
+using MiniTC.Presenters;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MiniTC.Views
 {
-    /// <summary>
-    /// Logika interakcji dla klasy PanelTC.xaml
-    /// </summary>
-    public partial class PanelTC : UserControl
+    public partial class PanelTC : UserControl, IPanelTC
     {
-        private PanelTCPresenter _presenter;
-        public IEnumerable<string> LogicalDrives => _presenter.GetLogicalDrives();
-        public IEnumerable<string> DirectoryItems { get; set; }
+        private readonly PanelTCPresenter _presenter;
+
+        private string? _currentPath;
+        public string? CurrentPath
+        {
+            get => _currentPath;
+            set
+            {
+                _currentPath = value;
+                PathTextBox.Text = value ?? string.Empty;
+            }
+        }
 
         public PanelTC()
         {
             InitializeComponent();
-            _presenter = new PanelTCPresenter();
-            this.DataContext = this;
+            _presenter = new PanelTCPresenter(this);
         }
 
-        public void OnDriveSelected(object sender, SelectionChangedEventArgs e)
+        public void SetLogicalDrives(IEnumerable<string> drives)
+        {
+            DrivesComboBox.ItemsSource = drives;
+        }
+
+        public void SetDirectoryItems(IEnumerable<string> items)
+        {
+            ItemsListBox.ItemsSource = items;
+        }
+
+        private void DrivesComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DrivesComboBox.SelectedItem is string selectedDrive)
             {
-                DirectoryItems = _presenter.GetDirectoryItems(selectedDrive);
-                ItemsListBox.ItemsSource = DirectoryItems;
+                _presenter.OnDriveSelected(selectedDrive);
+            }
+        }
+
+        private void ItemsListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ItemsListBox.SelectedItem is string selectedItem && CurrentPath != null)
+            {
+                _presenter.OnFileSelected(CurrentPath, selectedItem);
             }
         }
     }

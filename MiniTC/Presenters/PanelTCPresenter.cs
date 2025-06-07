@@ -1,31 +1,60 @@
-﻿using MiniTC.Models;
-using System;
+﻿using MiniTC.Interfaces;
+using MiniTC.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace MiniTC.Presenters
 {
-    class PanelTCPresenter
+    public class PanelTCPresenter
     {
+        private readonly IPanelTC _view;
         private readonly FileSystemService _fsService;
 
-        public PanelTCPresenter(FileSystemService fsService)
+        public PanelTCPresenter(IPanelTC view)
         {
-            _fsService = fsService;
+            _view = view;
+            _fsService = new FileSystemService();
+            Init();
         }
 
-        public PanelTCPresenter() : this(new FileSystemService()) {}
-
-        public IEnumerable<string> GetLogicalDrives()
+        private void Init()
         {
-            return _fsService.GetLogicalDrives();
+            IEnumerable<string> drives = _fsService.GetLogicalDrives();
+            _view.SetLogicalDrives(drives);
         }
 
-        public IEnumerable<string> GetDirectoryItems(string path)
+        public void OnDriveSelected(string drive)
         {
-            return _fsService.GetDirectoryItems(path);
+            var items = _fsService.GetDirectoryItems(drive);
+            _view.SetDirectoryItems(items);
+            _view.CurrentPath = drive;
         }
+
+        public void OnFileSelected(string currentPath, string file)
+        {
+            if (string.IsNullOrEmpty(currentPath) || string.IsNullOrEmpty(file))
+                return;
+            
+            bool isDirectory = file.StartsWith("<D> ") || file == "..";
+
+            if (file.StartsWith("<D> "))
+                file = file.Substring(4);
+
+            if (isDirectory)
+            {
+                var combinedPath = _fsService.CombinePath(currentPath, file);
+
+                if (combinedPath == null)
+                {
+                    MessageBox.Show("Nie można otworzyć katalogu", "Błąd");
+                    return;
+                }
+
+                var items = _fsService.GetDirectoryItems(combinedPath);
+                _view.SetDirectoryItems(items);
+                _view.CurrentPath = combinedPath;
+            }
+        }
+
     }
 }
