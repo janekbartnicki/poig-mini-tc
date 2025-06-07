@@ -23,6 +23,6 @@
             <ComboBox x:Name="DrivesComboBox" SelectionChanged="DrivesComboBox_SelectionChanged" ItemsSource="{Binding LogicalDrives}"  Width="100"/>
         </StackPanel>
 
-        <ListBox x:Name="ItemsListBox" Grid.Row="2" MouseDoubleClick="ItemsListBox_MouseDoubleClick"/>
+        <ListBox x:Name="ItemsListBox" Grid.Row="2" MouseDoubleClick="ItemsListBox_MouseDoubleClick" PreviewMouseLeftButtonDown="ItemsListBox_PreviewMouseLeftButtonDown"/>
     </Grid>
 </UserControl>

@@ -12,6 +12,7 @@ namespace MiniTC.Interfaces
         void SetLogicalDrives(IEnumerable<string> drives);
         void SetDirectoryItems(IEnumerable<string> items);
         string? CurrentPath { get; set; }
+        string? SelectedItem { get; }
     }
 
 }

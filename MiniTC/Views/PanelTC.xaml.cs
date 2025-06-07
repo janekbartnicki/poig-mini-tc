@@ -10,6 +10,7 @@ namespace MiniTC.Views
     public partial class PanelTC : UserControl, IPanelTC
     {
         private readonly PanelTCPresenter _presenter;
+        public string? SelectedItem => ItemsListBox.SelectedItem as string;
 
         private string? _currentPath;
         public string? CurrentPath
@@ -22,10 +23,17 @@ namespace MiniTC.Views
             }
         }
 
+        public event Action<PanelTC>? PanelClicked;
+
         public PanelTC()
         {
             InitializeComponent();
             _presenter = new PanelTCPresenter(this);
+        }
+
+        private void RaisePanelClicked()
+        {
+            PanelClicked?.Invoke(this);
         }
 
         public void SetLogicalDrives(IEnumerable<string> drives)
@@ -52,6 +60,11 @@ namespace MiniTC.Views
             {
                 _presenter.OnFileSelected(CurrentPath, selectedItem);
             }
+        }
+
+        private void ItemsListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            RaisePanelClicked();
         }
     }
 }

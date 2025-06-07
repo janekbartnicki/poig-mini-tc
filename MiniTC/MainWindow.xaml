@@ -17,7 +17,7 @@
         <views:PanelTC x:Name="LeftPanel" Grid.Column="0" Margin="10" />
 
         <StackPanel Grid.Column="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <Button x:Name="CopyButton" Content="Kopiuj" Padding="10,5" Margin="10" />
+            <Button x:Name="CopyButton" Click="CopyButton_Click" Content="Kopiuj" Padding="10,5" Margin="10" />
         </StackPanel>
 
         <views:PanelTC x:Name="RightPanel" Grid.Column="2" Margin="10" />
